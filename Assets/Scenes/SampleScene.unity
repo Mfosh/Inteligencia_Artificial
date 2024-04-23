@@ -3052,7 +3052,7 @@ Animator:
   m_GameObject: {fileID: 1285663507}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d8c0f63d98efb3a44aaf94f968719bae, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3075,7 +3075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae12b4885cb6c694f98fd0764aebc89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangulo: {fileID: 0}
+  triangulo: {fileID: 145895896}
   distancia: 0
   puntoInicial: {x: 0, y: 0, z: 0}
 --- !u!1 &1433625834

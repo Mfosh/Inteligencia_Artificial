@@ -16,7 +16,7 @@ public class Enemigo_SeguirBehaviur : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         tiempoSeguir = tiempoBase;
-        triangulo = GameObject.FindGameObjectWithTag("Player").GameComponent<Transform>();
+        triangulo = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemigo = animator.gameObject.GetComponent<Enemigo>();
     }
 
@@ -24,7 +24,7 @@ public class Enemigo_SeguirBehaviur : StateMachineBehaviour
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.transform = Vector2.MoveTowards(animator.transform.position, triangulo.position, velocidadMovimiento * Time.deltaTime);
+        animator.transform.position = Vector2.MoveTowards(animator.transform.position, triangulo.position, velocidadMovimiento * Time.deltaTime);
         tiempoSeguir -= Time.deltaTime;
         if (tiempoSeguir < 0)
         {
