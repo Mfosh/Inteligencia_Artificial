@@ -31,15 +31,26 @@ public class Player : MonoBehaviour
     {
         
     }
+    
+    //public void Move(Vector3 Dir, Vector2 mousePos)
+    //{
+    //    _rb.velocity = Dir * _movementSpeed;
 
-    public void Move(Vector3 Dir, Vector2 mousePos)
+   //     Vector2 lookMouse = mousePos - _rb.position;
+   //     float angle = Mathf.Atan2(lookMouse.y, lookMouse.x) * Mathf.Rad2Deg - 90f;
+   //     _rb.rotation = angle;
+   // }
+    
+    public void Move(Vector3 Dir)
     {
         _rb.velocity = Dir * _movementSpeed;
 
-        Vector2 lookMouse = mousePos - _rb.position;
-        float angle = Mathf.Atan2(lookMouse.y, lookMouse.x) * Mathf.Rad2Deg - 90f;
-        _rb.rotation = angle;
     }
 
+    public void LookDir(Vector3 dir)
+    {
+        if (dir.x == 0 && dir.y == 0) return;
+        transform.up = dir;
+    }
 
 }
