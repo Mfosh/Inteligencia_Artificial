@@ -24,7 +24,7 @@ public class Pursuit : ISteering
         {
             dirToPoint = dirToTarget;
 #if UNITY_EDITOR
-            point = _target.position;// Debug
+           // point = _target.position;// Debug
 #endif
         }
 
