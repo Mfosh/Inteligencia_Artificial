@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
          float y = Input.GetAxis("Vertical");
          Vector3 dir = new Vector3(x, y, 0).normalized;
 
-        player.Move(dir, MouseDirection);
+        player.Move(dir);
 
 
 
