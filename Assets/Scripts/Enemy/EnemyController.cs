@@ -44,6 +44,16 @@ public class EnemyController : MonoBehaviour
         //Estado Inicial
         _fsm.SetInit(steering);
     }
+
+
+    void InitializeTree()
+    {
+        var Pursuit = new ActionNode(() => _fsm.Transition(StatesEnum.Chase));
+        var Idle = new ActionNode(() => _fsm.Transition(StatesEnum.Idle));
+
+        //var qLoS = new QuestionNode()
+    }
+
     void Update()
     {
         _fsm.OnUpdate();
