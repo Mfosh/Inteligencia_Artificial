@@ -26,10 +26,10 @@ public class PlayerView : MonoBehaviour
 
     private void FixedUpdate()
     {
-        PointAtMouse();
+        //PointAtMouse();
     }
 
-    public void PointAtMouse()
+    public void FollowMouse(Vector2 mousePos)
     {
 
     }
