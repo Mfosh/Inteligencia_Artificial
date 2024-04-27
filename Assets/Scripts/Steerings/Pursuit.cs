@@ -5,10 +5,10 @@ using UnityEngine;
 public class Pursuit : ISteering
 {
     Transform _entity;
-    Rigidbody _target;
+    Rigidbody2D _target;
     float _timePrediction;
 
-    public Pursuit(Transform entity, Rigidbody target, float timePrediction)
+    public Pursuit(Transform entity, Rigidbody2D target, float timePrediction)
     {
         _entity = entity;
         _target = target;
@@ -16,9 +16,11 @@ public class Pursuit : ISteering
     }
     public Vector3 GetDir()
     {
-        Vector3 point = _target.position + _target.transform.up * _target.velocity.magnitude * _timePrediction;
-        Vector3 dirToPoint = (point - _entity.position).normalized;
-        Vector3 dirToTarget = (_target.position - _entity.position).normalized;
+        Vector3 TargetPos = new Vector2(_target.position.x, _target.position.y);
+
+        Vector2 point = TargetPos + _target.transform.up * _target.velocity.magnitude * _timePrediction;
+        Vector2 dirToPoint = new Vector2 (point.x - _entity.position.x,point.y - _entity.position.y).normalized;
+        Vector2 dirToTarget = (TargetPos - _entity.position).normalized;
 
         if (Vector3.Dot(dirToPoint, dirToTarget) < 0)
         {

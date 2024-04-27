@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
     FSM<StatesEnum> _fsm;
     ISteering _steering;
     Enemy _enemy;
-    public Rigidbody target;
+    public Rigidbody2D target;
     public float timePrediction;
     public float angle;
     public float radius;
