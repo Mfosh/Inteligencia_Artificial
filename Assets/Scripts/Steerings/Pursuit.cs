@@ -31,9 +31,9 @@ public class Pursuit : ISteering
         }
 
 #if UNITY_EDITOR
-        //Debug.DrawRay(point, Vector3.up * 2, Color.red);// Debug
-        //Debug.DrawRay(point, Quaternion.Euler(0, 0, 45) * Vector3.up * 2, Color.red);// Debug
-        //Debug.DrawRay(point, Quaternion.Euler(0, 0, -45) * Vector3.up * 2, Color.red);// Debug
+        Debug.DrawRay(point, Vector3.up * 2, Color.red);// Debug
+        Debug.DrawRay(point, Quaternion.Euler(0, 0, 45) * Vector3.up * 2, Color.red);// Debug
+        Debug.DrawRay(point, Quaternion.Euler(0, 0, -45) * Vector3.up * 2, Color.red);// Debug
 #endif
         return dirToPoint;
     }
