@@ -18,9 +18,9 @@ public class Pursuit : ISteering
     {
         Vector3 TargetPos = new Vector2(_target.position.x, _target.position.y);
 
-        Vector2 point = TargetPos + _target.transform.up * _target.velocity.magnitude * _timePrediction;
-        Vector2 dirToPoint = new Vector2 (point.x - _entity.position.x,point.y - _entity.position.y).normalized;
-        Vector2 dirToTarget = (TargetPos - _entity.position).normalized;
+        Vector3 point = TargetPos + _target.transform.forward * _target.velocity.magnitude * _timePrediction;
+        Vector3 dirToPoint = new Vector2 (point.x - _entity.position.x, point.y - _entity.position.y).normalized;
+        Vector3 dirToTarget = (TargetPos - _entity.position).normalized;
 
         if (Vector3.Dot(dirToPoint, dirToTarget) < 0)
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemigo : MonoBehaviour
 {
-   // [SerializeField] public Transform triangulo;
+    [SerializeField] public Transform triangulo;
 
     [SerializeField] private float distancia;
 
@@ -22,7 +22,7 @@ public class Enemigo : MonoBehaviour
 
     private void Update()
     {
-       // distancia = Vector2.Distance(transform.position, triangulo.position);
+        distancia = Vector2.Distance(transform.position, triangulo.position);
         animator.SetFloat("Distancia", distancia);
     }
 

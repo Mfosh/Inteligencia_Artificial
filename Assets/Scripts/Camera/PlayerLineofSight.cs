@@ -42,4 +42,9 @@ public class PlayerLineofSight : MonoBehaviour
         // No colisionamos con el jugador, por lo tanto no se encontro ningun jugador
         return false;
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(transform.position, transform.forward);
+    }
 }

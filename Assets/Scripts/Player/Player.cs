@@ -6,7 +6,10 @@ public class Player : MonoBehaviour
 {
     #region [Variables]
     [SerializeField] private float _movementSpeed;
+    int _currentLife;
+    int MaxLife = 5;
     private Rigidbody2D _rb;
+
 
 
     #endregion
@@ -18,7 +21,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _currentLife = MaxLife;
     }
 
     // Update is called once per frame
@@ -47,5 +50,21 @@ public class Player : MonoBehaviour
         if (dir.x == 0 && dir.y == 0) return;
         transform.up = dir;
     }
+
+    public void TakeDamage(int damage)
+    {
+        _currentLife -= damage;
+        Debug.Log(_currentLife);
+        if(_currentLife <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Die");
+    }
+
 
 }

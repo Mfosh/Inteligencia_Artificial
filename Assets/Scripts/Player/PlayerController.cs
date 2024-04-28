@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
          Vector3 dir = new Vector3(x, y, 0).normalized;
 
         player.Move(dir);
+        player.LookDir(dir);
 
 
 

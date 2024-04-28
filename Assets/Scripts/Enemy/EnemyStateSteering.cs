@@ -13,11 +13,13 @@ public class EnemyStateSteering<T> : State<T>
         _steering = steering;
         _enemy = enemy;
         _obs = obs;
+
     }
 
     public override void Execute()
     {
         var dir = _obs.GetDir(_steering.GetDir());
+
         _enemy.Move(dir);
         _enemy.LookDir(dir);
     }

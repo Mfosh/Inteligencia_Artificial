@@ -6,29 +6,28 @@ public class ObstacleAvoidance
 {
     float _angle;
     float _radius;
-    float _personalArea;
     Transform _entity;
     LayerMask _maskObs;
 
-    public ObstacleAvoidance(Transform entity, float angle, float radius, LayerMask maskObs, float personalArea = 1)
+    public ObstacleAvoidance(Transform entity, float angle, float radius, LayerMask maskObs)
     {
         _angle = angle;
         _radius = radius;
         _entity = entity;
         _maskObs = maskObs;
-        _personalArea = personalArea;
     }
 
     public Vector3 GetDir(Vector3 currentDir, bool calculateY = true)
     {
-        Collider[] colls = Physics.OverlapSphere(_entity.position, _radius, _maskObs);
-        Collider nearColl = null;
+        Collider2D[] colls = Physics2D.OverlapCircleAll(_entity.position, _radius, _maskObs);
+        Collider2D nearColl = null;
         Vector3 closetPoint = Vector3.zero;
         float nearCollDistance = 0;
         if (!calculateY) currentDir.y = 0;
         for (int i = 0; i < colls.Length; i++)
         {
             var currentColl = colls[i];
+            Debug.Log(currentColl);
             closetPoint = currentColl.ClosestPoint(_entity.position);
             if (!calculateY) closetPoint.y = _entity.position.y;
             Vector3 dirToColl = closetPoint - _entity.position;
@@ -52,26 +51,13 @@ public class ObstacleAvoidance
         }
         if (nearColl == null)
         {
+           
             return currentDir;
         }
         else
         {
-            //Para esquivar obstaculos chiquitos:
-            //Vector3 newDir = (currentDir + (_entity.position - closetPoint).normalized).normalized;
-
-            Vector3 relativePos = _entity.InverseTransformPoint(closetPoint);
-            Vector3 dirToClosetPoint = (closetPoint - _entity.position).normalized;
-            Vector3 newDir;
-            if (relativePos.x < 0)
-            {
-                newDir = Vector3.Cross(_entity.up, dirToClosetPoint);
-            }
-            else
-            {
-                newDir = -Vector3.Cross(_entity.up, dirToClosetPoint);
-            }
-            return Vector3.Lerp(currentDir, newDir, (_radius - Mathf.Clamp(nearCollDistance - _personalArea, 0, _radius)) / _radius);
+            Vector3 newDir = (currentDir + (_entity.position - closetPoint).normalized).normalized;
+            return Vector3.Lerp(currentDir, newDir, (_radius - nearCollDistance) / _radius);
         }
     }
-
 }
