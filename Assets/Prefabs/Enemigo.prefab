@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4970722611350847951}
   - component: {fileID: 8712519052861432557}
   - component: {fileID: 8407356416955500286}
+  - component: {fileID: 8458809405846507493}
   m_Layer: 0
   m_Name: Enemigo
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.08, y: 6.97, z: -0.63}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5259, y: 0.5487, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8323414993075563379}
@@ -104,6 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementSpeed: 2
+  AttackCooldown: 3
 --- !u!114 &7206418523265860829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,11 +120,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   timePrediction: 1
-  angle: 238.4
-  radius: 3.7
+  angle: 165.3
+  radius: 0.62
   obsMask:
     serializedVersion: 2
     m_Bits: 768
+  attackRange: 2
+  _wayPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!50 &4744535770121166143
 Rigidbody2D:
   serializedVersion: 4
@@ -148,8 +155,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!58 &4970722611350847951
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -218,13 +225,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc4cb2538bb7c940b2973690eafb848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 1000
+  Range: 0.89
   WhatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
   WhatBlocksSight:
     serializedVersion: 2
     m_Bits: 384
+--- !u!114 &8458809405846507493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4872615062933162747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e69295c57d51f634f884d00d4bb6768b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ammo: 5
+  Bullet: {fileID: 4088902316005068119, guid: 61a50c9e35701c1438e4e1e7c04d5e41, type: 3}
+  shootingPoint: {fileID: 8323414993075563379}
 --- !u!1 &5130712850130034103
 GameObject:
   m_ObjectHideFlags: 0
