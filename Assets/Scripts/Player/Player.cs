@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class Player : MonoBehaviour
     int MaxLife = 5;
     private Rigidbody2D _rb;
 
-
+    public GameObject _canvas;
+    public TMP_Text _message;
 
     #endregion
     private void Awake()
@@ -54,6 +56,8 @@ public class Player : MonoBehaviour
 
     void Die()
     {
+        _message.text = "Perdiste!";
+        _canvas.SetActive(true);
         Debug.Log("Die");
     }
 

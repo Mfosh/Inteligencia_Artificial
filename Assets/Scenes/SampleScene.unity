@@ -532,6 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvas: {fileID: 1840139639}
+  _message: {fileID: 1350257301}
 --- !u!61 &662929869
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6850,7 +6851,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 39.2, y: 38.6, z: -10}
+  m_LocalPosition: {x: -10.7, y: -6.08, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7057,7 +7058,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ganaste!
+  m_text: '-'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7246,7 +7247,7 @@ Transform:
   m_GameObject: {fileID: 1443607920}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 39.2, y: 38.6, z: -10}
+  m_LocalPosition: {x: -10.7, y: -6.08, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16202,11 +16203,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1588327137330671185, guid: a2eba8f4424d7df4e88f91b49682abcd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 39.2
+      value: -10.7
       objectReference: {fileID: 0}
     - target: {fileID: 1588327137330671185, guid: a2eba8f4424d7df4e88f91b49682abcd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 38.6
+      value: -6.08
       objectReference: {fileID: 0}
     - target: {fileID: 1588327137330671185, guid: a2eba8f4424d7df4e88f91b49682abcd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16240,6 +16241,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5689258309895743064, guid: a2eba8f4424d7df4e88f91b49682abcd, type: 3}
+      propertyPath: _canvas
+      value: 
+      objectReference: {fileID: 1840139639}
+    - target: {fileID: 5689258309895743064, guid: a2eba8f4424d7df4e88f91b49682abcd, type: 3}
+      propertyPath: _message
+      value: 
+      objectReference: {fileID: 1350257301}
     m_RemovedComponents:
     - {fileID: -5399459549517523764, guid: a2eba8f4424d7df4e88f91b49682abcd, type: 3}
     m_RemovedGameObjects: []
