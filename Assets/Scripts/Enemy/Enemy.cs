@@ -7,10 +7,16 @@ public class Enemy : Player
 {
     #region Variables
     public float AttackCooldown;
+    public float _restTime;
     Coroutine _cooldown;
+    Coroutine _rest;
+
+    public bool isResting;
 
     public Action Shoot = delegate { };
     #endregion
+
+
 
     #region Methods
     public void Attack()
@@ -28,7 +34,27 @@ public class Enemy : Player
     
     }
 
+
+    private void Update()
+    {
+        _restTime -= Time.deltaTime;
+
+        if(_restTime <= 0)
+        {
+            isResting = false;
+        }
+    }
+
+
     public bool isCooldown => _cooldown != null;
+
+    public bool EnemyResting => isResting;
+
+    public void Rest(float duration)
+    {
+        _restTime = duration;
+    }
+
 
     #endregion
 }

@@ -19,6 +19,7 @@ public class EnemyController : MonoBehaviour
     ITreeNode _root;
     public float attackRange;
 
+    [SerializeField]float _patrolCooldown;
  
 
     #region RWVariables
@@ -69,7 +70,7 @@ public class EnemyController : MonoBehaviour
 
 
         //States for the FSM 
-        var idle = new EnemyStateIdle<StatesEnum>();
+        var idle = new EnemyStateIdle<StatesEnum>(_patrolCooldown, _enemy);
         var patrol = new EnemyStatePatrol<StatesEnum>(_enemy, _wayPoints, _obstacleAvoidance, this);
         var steering = new EnemyStateSteering<StatesEnum>(_enemy,_steering, _obstacleAvoidance);
         var shoot = new EnemyAttackState<StatesEnum>(_enemy);
@@ -112,7 +113,8 @@ public class EnemyController : MonoBehaviour
 
 
         //Questions
-        var qNearWaypoint = new QuestionNode(NearWaypoint, Idle, Patrol);
+        var qIsResting = new QuestionNode(isEnemyResting, Idle, Patrol);
+        var qNearWaypoint = new QuestionNode(NearWaypoint, qIsResting, Patrol);
         var qisCooldown = new QuestionNode(() => _enemy.isCooldown, Pursuit, Shoot);
         var qAttack = new QuestionNode(QuestionAttack, qisCooldown, Pursuit);
         var qLoS = new QuestionNode(QuestionLoS, qAttack , qNearWaypoint);
@@ -121,6 +123,17 @@ public class EnemyController : MonoBehaviour
         _root = qLoS;
     }
     #endregion
+
+    bool isEnemyResting()
+    {
+        if (_enemy.isResting)
+        {
+            Debug.Log("Beginrest");
+            return true;
+        }
+
+        else { return false; }
+    }
 
     bool QuestionLoS()
     {
@@ -134,8 +147,11 @@ public class EnemyController : MonoBehaviour
 
         if (Vector2.Distance(_enemy.transform.position, _wayPoints[_currentWaypoint].transform.position) < 0.3f)
         {
+            _enemy.isResting = true;
             //When near Wp, choose the next one
             NextWaypoint();
+            Debug.Log("Reached Point");
+           
             return true;
         }
 
@@ -176,6 +192,7 @@ public class EnemyController : MonoBehaviour
     {
         _fsm.OnUpdate();
         _root.Execute();
+
     }
 
 

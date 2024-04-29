@@ -24,7 +24,7 @@ public class EnemyStatePatrol<T> : State<T>
 
     public override void Execute()
     {
-
+    
         //Get the current waypoint from the enemy Controller
         _currentWaypoint = _enemController.CurrentWaypoint();
 
