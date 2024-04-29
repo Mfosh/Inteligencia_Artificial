@@ -5,9 +5,13 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
+    CinemachineMovimientoCamara movimientoCamara;
+    [SerializeField] private float intencidadCamara;
+    [SerializeField] private float frecuenciaCamara;
+    [SerializeField] private float tiempoCamara;
     #region [Variables]
     [SerializeField] private float _movementSpeed;
-    int _currentLife;
+    [SerializeField] private int _currentLife;
     int MaxLife = 5;
     private Rigidbody2D _rb;
 
@@ -17,6 +21,9 @@ public class Player : MonoBehaviour
     #endregion
     private void Awake()
     {
+        
+        movimientoCamara = GameObject.Find("Virtual Camera").GetComponent<CinemachineMovimientoCamara>();
+        Debug.Log(movimientoCamara);
         _rb = GetComponent<Rigidbody2D>();
     }
 
@@ -47,8 +54,9 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _currentLife -= damage;
-        Debug.Log(_currentLife);
-        if(_currentLife <= 0)
+        Debug.Log("Vida" + _currentLife);
+        movimientoCamara.MoverCamara(intencidadCamara, frecuenciaCamara, tiempoCamara);
+        if (_currentLife <= 0)
         {
             Die();
         }
@@ -59,6 +67,7 @@ public class Player : MonoBehaviour
         _message.text = "Perdiste!";
         _canvas.SetActive(true);
         Debug.Log("Die");
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 
 
