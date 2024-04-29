@@ -126,10 +126,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   attackRange: 2
+  wayPointsInfo:
+  - type: 0
+    probability: 1
+  - type: 1
+    probability: 30
+  - type: 2
+    probability: 60
   _wayPoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _currentWaypoint: 0
 --- !u!50 &4744535770121166143
 Rigidbody2D:
   serializedVersion: 4
@@ -225,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc4cb2538bb7c940b2973690eafb848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 0.89
+  Range: 2.35
   WhatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
