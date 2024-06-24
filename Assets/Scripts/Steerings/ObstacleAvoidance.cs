@@ -57,18 +57,8 @@ public class ObstacleAvoidance
         }
         else
         {
-            Vector3 relativePos = _entity.InverseTransformPoint(closetPoint);
-            Vector3 dirToClosetPoint = (closetPoint - _entity.position).normalized;
-            Vector3 newDir;
-            if (relativePos.x < 0)
-            {
-                newDir = Vector3.Cross(_entity.up, dirToClosetPoint);
-            }
-            else
-            {
-                newDir = -Vector3.Cross(_entity.up, dirToClosetPoint);
-            }
-            return Vector3.Lerp(currentDir, newDir, (_radius - Mathf.Clamp(nearCollDistance - _personalArea, 0, _radius)) / _radius);
+            Vector3 newDir = (currentDir + (_entity.position - closetPoint).normalized).normalized;
+            return Vector3.Lerp(currentDir, newDir, (_radius - nearCollDistance) / _radius);
         }
     }
 }

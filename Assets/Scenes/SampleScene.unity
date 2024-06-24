@@ -7430,7 +7430,7 @@ Transform:
   m_GameObject: {fileID: 1433625834}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16845,7 +16845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2056406308241701003, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2056406308241701003, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -17037,7 +17037,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8407356416955500286, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: Range
-      value: 2.35
+      value: 6.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 8407356416955500286, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
+      propertyPath: WhatBlocksSight.m_Bits
+      value: 896
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7437212257048844715, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}

@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]float _patrolCooldown;
     public Waypoints Objective;
     EnemyStatePatrol<StatesEnum> patrol;
-
+    public bool LookingForPlayer;
 
 
     #region RWVariables
@@ -80,7 +80,7 @@ public class EnemyController : MonoBehaviour
         //States for the FSM 
         var idle = new EnemyStateIdle<StatesEnum>(_patrolCooldown, _enemy, _rb);
         patrol = new EnemyStatePatrol<StatesEnum>(_enemy,  _obstacleAvoidance, this, maskWayP, obsMask);
-        var steering = new EnemyStateSteering<StatesEnum>(_enemy,_steering, _obstacleAvoidance);
+        var steering = new EnemyStateSteering<StatesEnum>(_enemy,_steering, _obstacleAvoidance, this);
         var shoot = new EnemyAttackState<StatesEnum>(_enemy);
 
         //Transitions between every state
@@ -152,24 +152,7 @@ public class EnemyController : MonoBehaviour
 
     bool NearWaypoint()
     {
-        //Check distance between NPC and Waypoints
-        //
-        //    if (Vector2.Distance(_enemy.transform.position, _wayPoints[_currentWaypoint].transform.position) < 0.3f)
-        //    {
-        //        _enemy.isResting = true;
-        //        //When near Wp, choose the next one
-        //        NextWaypoint();
-        //        Debug.Log("Reached Point");
-        //       
-        //        return true;
-        //    }
-        //
-        //
-        //    else
-        //    {
-        //        //Not reached waypoint Yet
-        //        return false;
-        //    }
+  
 
         return false;
     }
@@ -221,17 +204,33 @@ public class EnemyController : MonoBehaviour
 
     public int CurrentWaypoint()
     {
+
+        //Set all Waypoints to a low probability
         for (int i = 0; i < wayPointsInfo.Count; i++)
         {
             wayPointsInfo[i].probability = 10;
         }
-        //Return the current Waypoint. Utilized by patrol State to know wich waypoint is currently active
-        var nearWaypoints = Physics2D.OverlapCircleAll(transform.position, 5f, maskWayP);
-        for (int i = 0; i < nearWaypoints.Length; i++)
+
+        if (LookingForPlayer)
         {
-            var waypoint = nearWaypoints[i].GetComponent<Waypoints>();
-            waypoint.probability = 70;
+            var nearWaypoints = Physics2D.OverlapCircleAll(target.position, 5f, maskWayP);
+            for (int i = 0; i < nearWaypoints.Length; i++)
+            {
+                var waypoint = nearWaypoints[i].GetComponent<Waypoints>();
+                waypoint.probability = 100;
+            }
         }
+        else
+        {
+            //Check for near WP and increase their probabilites
+            var nearWaypoints = Physics2D.OverlapCircleAll(transform.position, 5f, maskWayP);
+            for (int i = 0; i < nearWaypoints.Length; i++)
+            {
+                var waypoint = nearWaypoints[i].GetComponent<Waypoints>();
+                waypoint.probability = 70;
+            }
+        }
+        //Keep throwing the Roullette in case the new Waypoint is the same as the current one
         _currentWaypoint = (int)RouletteWheel.Roulette(WaypointsDic);
         while (Objective == wayPointsInfo[_currentWaypoint])
         {

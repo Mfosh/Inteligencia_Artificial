@@ -36,10 +36,11 @@ public class EnemyStatePatrol<T> : State<T>
     public override void Enter()
     {
         base.Enter();
-
+       
         _nextPoint = 0;
         _isFinishPath = false;
         Objective = _enemController.GetObjective();
+        _enemController.LookingForPlayer = false;
         var start = GetNearNode(_enemy.transform.position);
         Debug.Log(start);
         if (start == null)
