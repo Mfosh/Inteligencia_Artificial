@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     {
         
         movimientoCamara = GameObject.Find("Virtual Camera").GetComponent<CinemachineMovimientoCamara>();
-        Debug.Log(movimientoCamara);
+
         _rb = GetComponent<Rigidbody2D>();
     }
 
@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     public void Move(Vector3 Dir)
     {
         _rb.velocity = Dir * _movementSpeed;
+ 
 
     }
 

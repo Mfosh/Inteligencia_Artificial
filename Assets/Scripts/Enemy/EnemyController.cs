@@ -10,17 +10,22 @@ public class EnemyController : MonoBehaviour
     ISteering _steering;
     Enemy _enemy;
     public Rigidbody2D target;
+    Rigidbody2D _rb;
     public float timePrediction;
     public float angle;
     public float radius;
     public LayerMask obsMask;
+    public LayerMask maskWayP;
     ObstacleAvoidance _obstacleAvoidance;
     PlayerLineofSight _los;
     ITreeNode _root;
     public float attackRange;
-
+    float personalArea = 5f;
     [SerializeField]float _patrolCooldown;
- 
+    public Waypoints Objective;
+    EnemyStatePatrol<StatesEnum> patrol;
+
+
 
     #region RWVariables
     Dictionary<WaypointsEnum, float> WaypointsDic;
@@ -39,6 +44,7 @@ public class EnemyController : MonoBehaviour
         //Initialize Components
         _enemy = GetComponent<Enemy>();
         _los = GetComponent<PlayerLineofSight>();
+        _rb = GetComponent<Rigidbody2D>();
         InitializeSteeringsTest();
         InitializeFSM();
         InitializeTree();
@@ -53,6 +59,8 @@ public class EnemyController : MonoBehaviour
 
 
         Debug.Log(_fsm.CurrentState.ToString());
+
+        CurrentWaypoint();
     }
 
     void InitializeSteeringsTest()
@@ -60,8 +68,8 @@ public class EnemyController : MonoBehaviour
         //Steering States & obstacle avoidance 
         var seek = new Seek(_enemy.transform, target.transform);
         var pursuit = new Pursuit(_enemy.transform, target, timePrediction);
-        _steering = seek;
-        _obstacleAvoidance = new ObstacleAvoidance(_enemy.transform, angle, radius, obsMask);
+        _steering = pursuit;
+        _obstacleAvoidance = new ObstacleAvoidance(_enemy.transform, angle, radius, obsMask, personalArea);
     }
 
     void InitializeFSM()
@@ -70,8 +78,8 @@ public class EnemyController : MonoBehaviour
 
 
         //States for the FSM 
-        var idle = new EnemyStateIdle<StatesEnum>(_patrolCooldown, _enemy);
-        var patrol = new EnemyStatePatrol<StatesEnum>(_enemy, _wayPoints, _obstacleAvoidance, this);
+        var idle = new EnemyStateIdle<StatesEnum>(_patrolCooldown, _enemy, _rb);
+        patrol = new EnemyStatePatrol<StatesEnum>(_enemy,  _obstacleAvoidance, this, maskWayP, obsMask);
         var steering = new EnemyStateSteering<StatesEnum>(_enemy,_steering, _obstacleAvoidance);
         var shoot = new EnemyAttackState<StatesEnum>(_enemy);
 
@@ -113,26 +121,27 @@ public class EnemyController : MonoBehaviour
 
 
         //Questions
-        var qIsResting = new QuestionNode(isEnemyResting, Idle, Patrol);
-        var qNearWaypoint = new QuestionNode(NearWaypoint, qIsResting, Patrol);
+
+     
+        var qIsResting = new QuestionNode(isEnemyResting, Idle,Patrol);
         var qisCooldown = new QuestionNode(() => _enemy.isCooldown, Pursuit, Shoot);
         var qAttack = new QuestionNode(QuestionAttack, qisCooldown, Pursuit);
-        var qLoS = new QuestionNode(QuestionLoS, qAttack , qNearWaypoint);
+        var qLoS = new QuestionNode(QuestionLoS, qAttack ,qIsResting);
 
         //FirstQuestion
         _root = qLoS;
     }
     #endregion
 
+    bool isPathFinished()
+    {
+        Debug.Log(patrol.IsFinishPath);
+        return patrol.IsFinishPath;
+    }
+
     bool isEnemyResting()
     {
-        if (_enemy.isResting)
-        {
-            Debug.Log("Beginrest");
-            return true;
-        }
-
-        else { return false; }
+        return _enemy.isResting;
     }
 
     bool QuestionLoS()
@@ -144,23 +153,25 @@ public class EnemyController : MonoBehaviour
     bool NearWaypoint()
     {
         //Check distance between NPC and Waypoints
+        //
+        //    if (Vector2.Distance(_enemy.transform.position, _wayPoints[_currentWaypoint].transform.position) < 0.3f)
+        //    {
+        //        _enemy.isResting = true;
+        //        //When near Wp, choose the next one
+        //        NextWaypoint();
+        //        Debug.Log("Reached Point");
+        //       
+        //        return true;
+        //    }
+        //
+        //
+        //    else
+        //    {
+        //        //Not reached waypoint Yet
+        //        return false;
+        //    }
 
-        if (Vector2.Distance(_enemy.transform.position, _wayPoints[_currentWaypoint].transform.position) < 0.3f)
-        {
-            _enemy.isResting = true;
-            //When near Wp, choose the next one
-            NextWaypoint();
-            Debug.Log("Reached Point");
-           
-            return true;
-        }
-
-
-        else
-        {
-            //Not reached waypoint Yet
-            return false;
-        }
+        return false;
     }
 
 
@@ -202,9 +213,31 @@ public class EnemyController : MonoBehaviour
        _currentWaypoint = (int)RouletteWheel.Roulette(WaypointsDic);
     }
 
+    public Waypoints GetObjective()
+    {
+        CurrentWaypoint();
+        return Objective;
+    }
+
     public int CurrentWaypoint()
     {
+        for (int i = 0; i < wayPointsInfo.Count; i++)
+        {
+            wayPointsInfo[i].probability = 10;
+        }
         //Return the current Waypoint. Utilized by patrol State to know wich waypoint is currently active
+        var nearWaypoints = Physics2D.OverlapCircleAll(transform.position, 5f, maskWayP);
+        for (int i = 0; i < nearWaypoints.Length; i++)
+        {
+            var waypoint = nearWaypoints[i].GetComponent<Waypoints>();
+            waypoint.probability = 70;
+        }
+        _currentWaypoint = (int)RouletteWheel.Roulette(WaypointsDic);
+        while (Objective == wayPointsInfo[_currentWaypoint])
+        {
+            _currentWaypoint = (int)RouletteWheel.Roulette(WaypointsDic);
+        }
+        Objective = wayPointsInfo[_currentWaypoint];
         return _currentWaypoint;
     }
 

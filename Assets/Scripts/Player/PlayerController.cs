@@ -7,31 +7,38 @@ public class PlayerController : MonoBehaviour
 
     Player player;
     Vector2 MouseDirection;
+    FSM<StatesEnum> _fsm;
     // Start is called before the first frame update
     void Start()
     {
         player = GetComponent<Player>();
+        InitializeFSM();
     }
 
+    void InitializeFSM()
+    {
+        _fsm = new FSM<StatesEnum>();
+
+        var idle = new PlayerStateIdle<StatesEnum>(StatesEnum.Walk);
+        var walk = new PlayerStateWalk<StatesEnum>(player, StatesEnum.Idle);
+
+        idle.AddTransition(StatesEnum.Walk, walk);
+        walk.AddTransition(StatesEnum.Idle, idle);
+
+        _fsm.SetInit(idle);
+
+
+    }
     // Update is called once per frame
     void Update()
     {
-
-
-        MouseDirection = MouseDir();
-
-        float x = Input.GetAxis("Horizontal");
-         float y = Input.GetAxis("Vertical");
-         Vector3 dir = new Vector3(x, y, 0).normalized;
-
-        player.Move(dir);
-        player.LookDir(dir);
-
-
-
+        _fsm.OnUpdate();
     }
 
 
+
+
+    
 
     private Vector2 MouseDir()
     {

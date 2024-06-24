@@ -48,7 +48,7 @@ public class Bullet : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Daño");
+
         if (((1 << other.gameObject.layer) & _hittableLayers) != 0)
         {
             other.GetComponent<Player>()?.TakeDamage(_damage);
