@@ -66,9 +66,11 @@ public class EnemyController : MonoBehaviour
     void InitializeSteeringsTest()
     {
         //Steering States & obstacle avoidance 
-        var seek = new Seek(_enemy.transform, target.transform);
-        var pursuit = new Pursuit(_enemy.transform, target, timePrediction);
-        _steering = pursuit;
+        //var seek = new Seek(_enemy.transform, target.transform);
+        //var pursuit = new Pursuit(_enemy.transform, target, timePrediction);
+
+        _steering = GetComponent<FlockingManager>();
+
         _obstacleAvoidance = new ObstacleAvoidance(_enemy.transform, angle, radius, obsMask, personalArea);
     }
 
