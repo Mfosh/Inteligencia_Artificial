@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour
     ITreeNode _root;
     public float attackRange;
     public float personalArea = 5f;
+    public float searchCooldown = 5f;
     [SerializeField]float _patrolCooldown;
     public Waypoints Objective;
     EnemyStatePatrol<StatesEnum> patrol;
@@ -83,7 +84,7 @@ public class EnemyController : MonoBehaviour
         //States for the FSM 
         var idle = new EnemyStateIdle<StatesEnum>(_patrolCooldown, _enemy, _rb);
         patrol = new EnemyStatePatrol<StatesEnum>(_enemy,  _obstacleAvoidance, this, maskWayP, obsMask);
-        var steering = new EnemyStateSteering<StatesEnum>(_enemy,_steering, _obstacleAvoidance, this);
+        var steering = new EnemyStateSteering<StatesEnum>(_enemy,_steering, _obstacleAvoidance);
         var shoot = new EnemyAttackState<StatesEnum>(_enemy);
 
         //Transitions between every state
@@ -149,7 +150,12 @@ public class EnemyController : MonoBehaviour
 
     bool QuestionLoS()
     {
-        //Has the player been detected
+        var playerDetected = _los.IsPlayerOnSight();
+        if (playerDetected)
+        {
+            LookingForPlayer = true;
+            searchCooldown = 5f;
+        }
         return _los.IsPlayerOnSight();
     }
 
@@ -190,6 +196,14 @@ public class EnemyController : MonoBehaviour
         _fsm.OnUpdate();
         _root.Execute();
 
+        if (LookingForPlayer)
+        {
+            searchCooldown -= Time.deltaTime;
+            if (searchCooldown <= 0)
+            {
+                LookingForPlayer = false;
+            }
+        }
     }
 
 
@@ -216,7 +230,7 @@ public class EnemyController : MonoBehaviour
 
         if (LookingForPlayer)
         {
-            var nearWaypoints = Physics2D.OverlapCircleAll(target.position, 5f, maskWayP);
+            var nearWaypoints = Physics2D.OverlapCircleAll(target.position, 2f, maskWayP);
             for (int i = 0; i < nearWaypoints.Length; i++)
             {
                 var waypoint = nearWaypoints[i].GetComponent<Waypoints>();

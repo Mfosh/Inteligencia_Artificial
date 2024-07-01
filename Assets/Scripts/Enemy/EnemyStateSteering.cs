@@ -22,14 +22,14 @@ public class EnemyStateSteering<T> : State<T>
     {
         var dir = _obs.GetDir(_steering.GetDir());
 
-        _enemy.Move(dir);
+        _enemy.Move(dir.normalized);
         _enemy.LookDir(dir);
     }
 
     public override void Sleep()
     {
         base.Sleep();
-        _enemyController.LookingForPlayer = true;
+      
         
     }
 }

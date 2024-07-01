@@ -165,5 +165,5 @@ MonoBehaviour:
   _lifeTime: 10
   _hittableLayers:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 896
   _damage: 1

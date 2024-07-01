@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8712519052861432557}
   - component: {fileID: 8407356416955500286}
   - component: {fileID: 8458809405846507493}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemigo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,6 +86,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   attackRange: 2
+  personalArea: 5
+  searchCooldown: 5
   _patrolCooldown: 0
   Objective: {fileID: 0}
   LookingForPlayer: 0
@@ -154,7 +156,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -224,7 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8323414993075563379}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ShootingPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6113850427060319291}
   - component: {fileID: 5339075995251633261}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: hitman1_gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}

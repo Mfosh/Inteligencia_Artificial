@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
         _message.text = "Perdiste!";
         _canvas.SetActive(true);
         Debug.Log("Die");
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
     }
 
 

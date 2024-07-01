@@ -40,7 +40,7 @@ public class EnemyStatePatrol<T> : State<T>
         _nextPoint = 0;
         _isFinishPath = false;
         Objective = _enemController.GetObjective();
-        _enemController.LookingForPlayer = false;
+
         var start = GetNearNode(_enemy.transform.position);
         Debug.Log(start);
         if (start == null)
@@ -83,7 +83,7 @@ public class EnemyStatePatrol<T> : State<T>
     void FollowPath() 
     {
         if (IsFinishPath) return;
-        Debug.Log(path[_nextPoint]);
+
         var point = path[_nextPoint].transform.position;
 
         
@@ -115,7 +115,7 @@ public class EnemyStatePatrol<T> : State<T>
     {
         
         var waypoint = Physics2D.OverlapCircleAll(pos, 500, maskWayP);
-        Debug.Log(maskWayP);
+        Debug.Log("Waypoints:" + waypoint.Length);
         if (waypoint.Length == 0)
         {
             Debug.Log("No encuentra nodos");
