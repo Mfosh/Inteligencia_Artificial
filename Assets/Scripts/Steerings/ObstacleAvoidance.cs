@@ -18,11 +18,11 @@ public class ObstacleAvoidance
         _personalArea = personalArea;
     }
 
-    public Vector3 GetDir(Vector3 currentDir, bool calculateY = true)
+    public Vector2 GetDir(Vector2 currentDir, bool calculateY = true)
     {
         Collider2D[] colls = Physics2D.OverlapCircleAll(_entity.position, _radius, _maskObs);
         Collider2D nearColl = null;
-        Vector3 closetPoint = Vector3.zero;
+        Vector2 closetPoint = Vector2.zero;
         float nearCollDistance = 0;
         if (!calculateY) currentDir.y = 0;
         for (int i = 0; i < colls.Length; i++)
@@ -31,8 +31,8 @@ public class ObstacleAvoidance
             Debug.Log(currentColl);
             closetPoint = currentColl.ClosestPoint(_entity.position);
             if (!calculateY) closetPoint.y = _entity.position.y;
-            Vector3 dirToColl = closetPoint - _entity.position;
-            float currentAngle = Vector3.Angle(dirToColl, currentDir);
+            Vector2 dirToColl = closetPoint - new Vector2 (_entity.position.x, _entity.position.y);
+            float currentAngle = Vector2.Angle(dirToColl, currentDir);
             float distance = dirToColl.magnitude;
 
             if (currentAngle > _angle / 2) { continue; }
@@ -57,8 +57,22 @@ public class ObstacleAvoidance
         }
         else
         {
-            Vector3 newDir = (currentDir + (_entity.position - closetPoint).normalized).normalized;
-            return Vector3.Lerp(currentDir, newDir, (_radius - nearCollDistance) / _radius);
+            Vector2 relativePos = _entity.InverseTransformPoint(closetPoint);
+            Vector2 dirToclosetPoint = (closetPoint - new Vector2(_entity.position.x,_entity.position.y )).normalized;
+            Vector2 newDir;
+            if (relativePos.x < 0)
+            {
+                newDir = Vector3.Cross(Vector3.back, dirToclosetPoint);
+            }
+
+            else
+            {
+                newDir = Vector3.Cross(Vector3.forward, dirToclosetPoint);
+            }
+
+            return Vector2.Lerp(currentDir, newDir, (_radius - Mathf.Clamp(nearCollDistance - _personalArea, 0, _radius)) / _radius);
         }
+
+
     }
 }

@@ -6120,7 +6120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 200571376}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy4Waypoints (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6154,7 +6154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 207800717}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Waypoint1
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -6185,7 +6185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255186816}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Waypoint2
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -11403,6 +11403,10 @@ PrefabInstance:
       propertyPath: _movementSpeed
       value: 3.95
       objectReference: {fileID: 0}
+    - target: {fileID: 4744535770121166143, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4872615062933162747, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: m_Name
       value: Enemigo
@@ -11456,12 +11460,24 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7206418523265860829, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
+      propertyPath: angle
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 7206418523265860829, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
+      propertyPath: radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7206418523265860829, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 840566633}
     - target: {fileID: 7206418523265860829, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
+      propertyPath: personalArea
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7206418523265860829, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: _patrolCooldown
-      value: 4.7
+      value: 0.78
       objectReference: {fileID: 0}
     - target: {fileID: 7206418523265860829, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: _wayPoints.Array.size
@@ -11487,6 +11503,18 @@ PrefabInstance:
       propertyPath: wayPointsInfo.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7206418523265860829, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
+      propertyPath: wayPointsInfo.Array.data[0]
+      value: 
+      objectReference: {fileID: 2056851045}
+    - target: {fileID: 7206418523265860829, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
+      propertyPath: wayPointsInfo.Array.data[1]
+      value: 
+      objectReference: {fileID: 1981085651}
+    - target: {fileID: 7206418523265860829, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
+      propertyPath: wayPointsInfo.Array.data[2]
+      value: 
+      objectReference: {fileID: 1910108021}
     - target: {fileID: 7206418523265860829, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: wayPointsInfo.Array.data[1].type
       value: 1
@@ -11830,7 +11858,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 649418391}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Waypoint8
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -12560,7 +12588,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1030569128}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Waypoint3
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -12699,7 +12727,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1156080726}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Waypoint9
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -12822,7 +12850,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1376402399}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy4Waypoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13063,7 +13091,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1750225059}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy4Waypoints (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13199,7 +13227,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1821832348}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Waypoint4
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -13230,7 +13258,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1910108020}
-  m_Layer: 0
+  - component: {fileID: 1910108021}
+  - component: {fileID: 1910108022}
+  m_Layer: 10
   m_Name: Waypoint7
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -13252,6 +13282,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 200571376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1910108021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910108019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90da02850e0f42f4dae4f390b48a8e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  probability: 50
+  Connections:
+  - {fileID: 1981085651}
+  - {fileID: 2056851045}
+--- !u!58 &1910108022
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910108019}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1001 &1973725077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13334,7 +13416,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1981085650}
-  m_Layer: 0
+  - component: {fileID: 1981085651}
+  - component: {fileID: 1981085652}
+  m_Layer: 10
   m_Name: Waypoint6
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -13350,12 +13434,64 @@ Transform:
   m_GameObject: {fileID: 1981085649}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.57, y: 2.05, z: 0}
+  m_LocalPosition: {x: 2.39, y: -0.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 200571376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1981085651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981085649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90da02850e0f42f4dae4f390b48a8e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  probability: 50
+  Connections:
+  - {fileID: 2056851045}
+  - {fileID: 1910108021}
+--- !u!58 &1981085652
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981085649}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1997640439
 GameObject:
   m_ObjectHideFlags: 3
@@ -13532,7 +13668,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2056851044}
-  m_Layer: 0
+  - component: {fileID: 2056851045}
+  - component: {fileID: 2056851046}
+  m_Layer: 10
   m_Name: Waypoint5
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -13554,6 +13692,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 200571376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2056851045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056851043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90da02850e0f42f4dae4f390b48a8e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  probability: 50
+  Connections:
+  - {fileID: 1981085651}
+  - {fileID: 1910108021}
+--- !u!58 &2056851046
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056851043}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

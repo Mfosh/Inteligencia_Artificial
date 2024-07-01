@@ -52,11 +52,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ce386bdafc3d4488ad2163b57a3122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  intencidadCamara: 0
+  frecuenciaCamara: 0
+  tiempoCamara: 0
   _movementSpeed: 2
+  _currentLife: 0
   _canvas: {fileID: 0}
   _message: {fileID: 0}
   AttackCooldown: 3
   _restTime: 0
+  _resting: 5
   isResting: 0
 --- !u!114 &7206418523265860829
 MonoBehaviour:
@@ -77,15 +82,17 @@ MonoBehaviour:
   obsMask:
     serializedVersion: 2
     m_Bits: 768
+  maskWayP:
+    serializedVersion: 2
+    m_Bits: 1024
   attackRange: 2
   _patrolCooldown: 0
+  Objective: {fileID: 0}
+  LookingForPlayer: 0
   wayPointsInfo:
-  - type: 0
-    probability: 1
-  - type: 1
-    probability: 30
-  - type: 2
-    probability: 60
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _wayPoints:
   - {fileID: 0}
   - {fileID: 0}

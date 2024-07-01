@@ -10,7 +10,7 @@ public class EnemyStatePatrol<T> : State<T>
     List<Waypoints> path;
     ObstacleAvoidance _obs;
     EnemyController _enemController;
-    float radius = 500f;
+    float radius = 100;
     LayerMask maskObs;
     LayerMask maskWayP;
     int _nextPoint = 0;
@@ -83,8 +83,10 @@ public class EnemyStatePatrol<T> : State<T>
     void FollowPath() 
     {
         if (IsFinishPath) return;
+        Debug.Log(path[_nextPoint]);
         var point = path[_nextPoint].transform.position;
-        Debug.Log(point);
+
+        
         var posPoint = point;
         posPoint.z = _enemy.transform.position.z;
 
@@ -102,8 +104,8 @@ public class EnemyStatePatrol<T> : State<T>
             }
         }
 
-       // var dirNorm = _obs.GetDir(dir.normalized);
-        _enemy.Move(dir.normalized);
+        var dirNorm = _obs.GetDir(dir.normalized);
+        _enemy.Move(dirNorm);
         _enemy.LookDir(dir);
     }
 
@@ -111,22 +113,28 @@ public class EnemyStatePatrol<T> : State<T>
 
     Waypoints GetNearNode(Vector3 pos)
     {
-        var waypoint = Physics2D.OverlapCircleAll(pos, radius, maskWayP);
-
+        
+        var waypoint = Physics2D.OverlapCircleAll(pos, 500, maskWayP);
+        Debug.Log(maskWayP);
+        if (waypoint.Length == 0)
+        {
+            Debug.Log("No encuentra nodos");
+        }
         Waypoints nearWaypoint = null;
+        
         float nearDistance = 0;
         for (int i = 0; i < waypoint.Length; i++)
         {
-      
+           
             var currentWaypoint = waypoint[i];
             var dir = currentWaypoint.transform.position - pos;
             float currentDistance = dir.magnitude;
             if (nearWaypoint == null || currentDistance < nearDistance)
             {
 
-                if (!Physics.Raycast(pos, dir.normalized, currentDistance, maskObs))
+                if (!Physics2D.Raycast(pos, dir.normalized, currentDistance, maskObs))
                 {
-                 ;
+                   
                     nearWaypoint = currentWaypoint.GetComponent<Waypoints>();
 
                     nearDistance = currentDistance;
@@ -134,7 +142,7 @@ public class EnemyStatePatrol<T> : State<T>
                 }
             }
         }
-     
+
         return nearWaypoint;
     }
     public bool IsFinishPath => _isFinishPath;

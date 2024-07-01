@@ -20,7 +20,7 @@ public class EnemyController : MonoBehaviour
     PlayerLineofSight _los;
     ITreeNode _root;
     public float attackRange;
-    float personalArea = 5f;
+    public float personalArea = 5f;
     [SerializeField]float _patrolCooldown;
     public Waypoints Objective;
     EnemyStatePatrol<StatesEnum> patrol;
@@ -66,10 +66,11 @@ public class EnemyController : MonoBehaviour
     void InitializeSteeringsTest()
     {
         //Steering States & obstacle avoidance 
-        //var seek = new Seek(_enemy.transform, target.transform);
-        //var pursuit = new Pursuit(_enemy.transform, target, timePrediction);
+        var seek = new Seek(_enemy.transform, target.transform);
+        var pursuit = new Pursuit(_enemy.transform, target, timePrediction);
 
-        _steering = GetComponent<FlockingManager>();
+        _steering = seek;
+        Debug.Log(_steering);
 
         _obstacleAvoidance = new ObstacleAvoidance(_enemy.transform, angle, radius, obsMask, personalArea);
     }
@@ -228,8 +229,11 @@ public class EnemyController : MonoBehaviour
             var nearWaypoints = Physics2D.OverlapCircleAll(transform.position, 5f, maskWayP);
             for (int i = 0; i < nearWaypoints.Length; i++)
             {
-                var waypoint = nearWaypoints[i].GetComponent<Waypoints>();
-                waypoint.probability = 70;
+                if (nearWaypoints[i].GetComponent<Waypoints>())
+                {
+                    var waypoint = nearWaypoints[i].GetComponent<Waypoints>();
+                    waypoint.probability = 70;
+                }
             }
         }
         //Keep throwing the Roullette in case the new Waypoint is the same as the current one
