@@ -70,7 +70,10 @@ public class EnemyController : MonoBehaviour
         //var pursuit = new Pursuit(_enemy.transform, target, timePrediction);
 
         _steering = GetComponent<FlockingManager>();
-
+        if (_steering == null)
+        {
+            Debug.Log("No funca");
+        }
         _obstacleAvoidance = new ObstacleAvoidance(_enemy.transform, angle, radius, obsMask, personalArea);
     }
 
@@ -82,7 +85,7 @@ public class EnemyController : MonoBehaviour
         //States for the FSM 
         var idle = new EnemyStateIdle<StatesEnum>(_patrolCooldown, _enemy, _rb);
         patrol = new EnemyStatePatrol<StatesEnum>(_enemy,  _obstacleAvoidance, this, maskWayP, obsMask);
-        var steering = new EnemyStateSteering<StatesEnum>(_enemy,_steering, _obstacleAvoidance, this);
+        var steering = new EnemyStateSteering<StatesEnum>(_enemy,_steering, _obstacleAvoidance);
         var shoot = new EnemyAttackState<StatesEnum>(_enemy);
 
         //Transitions between every state

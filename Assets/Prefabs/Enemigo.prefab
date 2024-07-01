@@ -14,8 +14,13 @@ GameObject:
   - component: {fileID: 4744535770121166143}
   - component: {fileID: 4970722611350847951}
   - component: {fileID: 8712519052861432557}
-  - component: {fileID: 8407356416955500286}
   - component: {fileID: 8458809405846507493}
+  - component: {fileID: 7298572148202653207}
+  - component: {fileID: 7592729968161286518}
+  - component: {fileID: 4266021105409820568}
+  - component: {fileID: 5753697749485556170}
+  - component: {fileID: 4865851289877335896}
+  - component: {fileID: 1715724181266619468}
   m_Layer: 0
   m_Name: Enemigo
   m_TagString: Untagged
@@ -52,11 +57,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ce386bdafc3d4488ad2163b57a3122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  intencidadCamara: 0
+  frecuenciaCamara: 0
+  tiempoCamara: 0
   _movementSpeed: 2
+  _currentLife: 0
   _canvas: {fileID: 0}
   _message: {fileID: 0}
   AttackCooldown: 3
   _restTime: 0
+  _resting: 5
   isResting: 0
 --- !u!114 &7206418523265860829
 MonoBehaviour:
@@ -77,19 +87,15 @@ MonoBehaviour:
   obsMask:
     serializedVersion: 2
     m_Bits: 768
+  maskWayP:
+    serializedVersion: 2
+    m_Bits: 0
   attackRange: 2
   _patrolCooldown: 0
-  wayPointsInfo:
-  - type: 0
-    probability: 1
-  - type: 1
-    probability: 30
-  - type: 2
-    probability: 60
-  _wayPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  Objective: {fileID: 0}
+  LookingForPlayer: 0
+  wayPointsInfo: []
+  _wayPoints: []
   _currentWaypoint: 0
 --- !u!50 &4744535770121166143
 Rigidbody2D:
@@ -174,25 +180,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8407356416955500286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4872615062933162747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bc4cb2538bb7c940b2973690eafb848, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Range: 2.35
-  WhatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 128
-  WhatBlocksSight:
-    serializedVersion: 2
-    m_Bits: 384
 --- !u!114 &8458809405846507493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +195,97 @@ MonoBehaviour:
   _ammo: 5
   Bullet: {fileID: 4088902316005068119, guid: 61a50c9e35701c1438e4e1e7c04d5e41, type: 3}
   shootingPoint: {fileID: 8323414993075563379}
+--- !u!114 &7298572148202653207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4872615062933162747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca43c3b75a1c53c4f8a043c782173117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 3.45
+  maxBoids: 3
+  boidMask:
+    serializedVersion: 2
+    m_Bits: 2048
+--- !u!114 &7592729968161286518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4872615062933162747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 900e29c0c375bad4db930bfe6d302dc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  multiplier: 5.51
+--- !u!114 &4266021105409820568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4872615062933162747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e4c12f6b8db014dbb4ed45584dec5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  multiplier: 1
+  personalArea: 0.32
+--- !u!114 &5753697749485556170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4872615062933162747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b8c4539944819488c2ef658360e2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  multiplier: 23.2
+--- !u!114 &4865851289877335896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4872615062933162747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 432808f7733becc4783db26469b7362a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  multiplier: 3
+  target: {fileID: 0}
+  isActive: 1
+--- !u!114 &1715724181266619468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4872615062933162747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bc4cb2538bb7c940b2973690eafb848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Range: 6.55
+  WhatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  WhatBlocksSight:
+    serializedVersion: 2
+    m_Bits: 896
 --- !u!1 &5130712850130034103
 GameObject:
   m_ObjectHideFlags: 0

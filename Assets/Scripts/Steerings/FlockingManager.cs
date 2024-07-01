@@ -9,23 +9,23 @@ public class FlockingManager : MonoBehaviour, ISteering
     public LayerMask boidMask;
     IFlockingBehaviour[] _flockings;
     IBoid _self;
-    Collider[] _colliders;
+    Collider2D[] _colliders;
     List<IBoid> _boids;
     private void Awake()
     {
         _self = GetComponent<IBoid>();
         _flockings = GetComponents<IFlockingBehaviour>();
-        _colliders = new Collider[maxBoids];
+        _colliders = new Collider2D[maxBoids];
         _boids = new List<IBoid>();
     }
     public Vector3 GetDir()
     {
         _boids.Clear();
-        int count = Physics.OverlapSphereNonAlloc(_self.Position, radius, _colliders, boidMask);
+        int count = Physics2D.OverlapCircleNonAlloc(_self.Position, radius, _colliders, boidMask);
         for (int i = 0; i < count; i++)
         {
             var currBoid = _colliders[i].GetComponent<IBoid>();
-            //print(currBoid);
+            Debug.Log("IBoid" + count);
             if (currBoid != null && currBoid != _self)
                 _boids.Add(currBoid);
         }

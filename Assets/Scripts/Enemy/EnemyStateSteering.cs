@@ -9,12 +9,13 @@ public class EnemyStateSteering<T> : State<T>
     ObstacleAvoidance _obs;
     EnemyController _enemyController;
 
-    public EnemyStateSteering(Enemy enemy, ISteering steering, ObstacleAvoidance obs, EnemyController enemyController)
+    public EnemyStateSteering(Enemy enemy, ISteering steering, ObstacleAvoidance obs)
     {
         _steering = steering;
         _enemy = enemy;
         _obs = obs;
-        _enemyController = enemyController;
+        Debug.Log(_steering);
+
     }
 
     public override void Execute()
