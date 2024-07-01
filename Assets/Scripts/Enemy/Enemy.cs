@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Player
+public class Enemy : Player, IBoid
 {
     #region Variables
     public float AttackCooldown;
@@ -15,6 +15,10 @@ public class Enemy : Player
     public bool isResting = true;
 
     public Action Shoot = delegate { };
+
+    public Vector3 Position => transform.position;
+    public Vector3 Front => transform.position;
+
     #endregion
 
 
