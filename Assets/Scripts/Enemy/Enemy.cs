@@ -11,10 +11,10 @@ public class Enemy : Player, IBoid
     public float _resting = 5f;
     Coroutine _cooldown;
     Coroutine _rest;
-
     public bool isResting = true;
 
     public Action Shoot = delegate { };
+    [SerializeField] private float _turnSpeed;
 
     public Vector3 Position => transform.position;
     public Vector3 Front => transform.position;
@@ -24,6 +24,8 @@ public class Enemy : Player, IBoid
 
 
     #region Methods
+
+
     public void Attack()
     {
         //Start cooldown coroutine, when its finshed perform attack
@@ -51,7 +53,12 @@ public class Enemy : Player, IBoid
         }
     }
 
-
+    public void FollowSight(Transform player)
+    {
+        Vector3 dir =  (player.position - transform.position).normalized;
+        float atan2 = Mathf.Atan2(dir.y, dir.x);
+        transform.rotation = Quaternion.Euler(0f, 0f, atan2 * Mathf.Rad2Deg - 90f);
+    }
     public bool isCooldown => _cooldown != null;
 
     public bool EnemyResting => isResting;

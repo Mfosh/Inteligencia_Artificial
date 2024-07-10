@@ -1,37 +1,36 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateIdle<T> : State<T>
+public class PlayerDetectedState<T> : State<T>
 {
-    float _patrolCooldown;
-    float _cooldown;
-    Coroutine _rest;
-    Rigidbody2D rb;
+    Transform _player;
     Enemy _enemy;
+    EnemyController _enemController;
+    private float searchCooldown = 2f;
 
-    public EnemyStateIdle(float Cooldown, Enemy enemy, Rigidbody2D _rb)
+    public PlayerDetectedState(Enemy enemy, Transform player)
     {
-        _cooldown = Cooldown;
-        rb = _rb;
+        _player = player;
         _enemy = enemy;
-    }
 
+    }
     public override void Enter()
     {
-        _enemy._restTime = _cooldown;
+        base.Enter();
         _enemy.StopMovement();
     }
     public override void Execute()
     {
-
-  
+        base.Execute();
+        _enemy.FollowSight(_player);
+        
     }
 
     public override void Sleep()
     {
         base.Sleep();
+
         _enemy.ResumeMovement();
     }
 }

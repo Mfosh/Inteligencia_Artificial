@@ -63,6 +63,7 @@ MonoBehaviour:
   _restTime: 0
   _resting: 5
   isResting: 0
+  _turnSpeed: 0
 --- !u!114 &7206418523265860829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,13 +82,17 @@ MonoBehaviour:
   radius: 0.62
   obsMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 512
   maskWayP:
     serializedVersion: 2
     m_Bits: 1024
+  maskObsWalls:
+    serializedVersion: 2
+    m_Bits: 768
   attackRange: 2
   personalArea: 5
   searchCooldown: 5
+  minDistance: 0
   _patrolCooldown: 0
   Objective: {fileID: 0}
   LookingForPlayer: 0
@@ -156,7 +161,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

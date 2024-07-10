@@ -24,13 +24,13 @@ public class ObstacleAvoidance
         Collider2D nearColl = null;
         Vector2 closetPoint = Vector2.zero;
         float nearCollDistance = 0;
-        if (!calculateY) currentDir.y = 0;
+
         for (int i = 0; i < colls.Length; i++)
         {
             var currentColl = colls[i];
             Debug.Log(currentColl);
             closetPoint = currentColl.ClosestPoint(_entity.position);
-            if (!calculateY) closetPoint.y = _entity.position.y;
+
             Vector2 dirToColl = closetPoint - new Vector2 (_entity.position.x, _entity.position.y);
             float currentAngle = Vector2.Angle(dirToColl, currentDir);
             float distance = dirToColl.magnitude;

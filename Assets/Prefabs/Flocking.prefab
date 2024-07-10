@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2056406308241701003, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.07831013
+      value: -15.18
       objectReference: {fileID: 0}
     - target: {fileID: 2056406308241701003, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.05267
+      value: -0.76
       objectReference: {fileID: 0}
     - target: {fileID: 2056406308241701003, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.63
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 2056406308241701003, guid: f246e90094cfcf94eaa70a41e376033b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -173,6 +173,8 @@ MonoBehaviour:
   obsMask:
     serializedVersion: 2
     m_Bits: 512
+  playerPos: {fileID: 0}
+  minDistance: 0
 --- !u!114 &-6564718333204428722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,8 +187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42e4c12f6b8db014dbb4ed45584dec5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplier: 2.1
-  personalArea: 0.48
+  multiplier: 34.15
+  personalArea: 0.28
 --- !u!114 &344648652490231856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b8c4539944819488c2ef658360e2e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplier: 1
+  multiplier: 1.25
 --- !u!114 &6295371282620732117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432808f7733becc4783db26469b7362a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplier: 0
+  multiplier: 20.7
   target: {fileID: 0}
   isActive: 1
 --- !u!114 &-8719977850625166216
@@ -227,8 +229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca43c3b75a1c53c4f8a043c782173117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.4
-  maxBoids: 17
+  radius: 4
+  maxBoids: 3
   boidMask:
     serializedVersion: 2
     m_Bits: 2048
@@ -244,4 +246,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900e29c0c375bad4db930bfe6d302dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplier: 1
+  multiplier: 3.37

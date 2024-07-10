@@ -16,12 +16,14 @@ public class EnemyController : MonoBehaviour
     public float radius;
     public LayerMask obsMask;
     public LayerMask maskWayP;
+    public LayerMask maskObsWalls;
     ObstacleAvoidance _obstacleAvoidance;
     PlayerLineofSight _los;
     ITreeNode _root;
     public float attackRange;
     public float personalArea = 5f;
     public float searchCooldown = 5f;
+    [SerializeField] float minDistance;
     [SerializeField]float _patrolCooldown;
     public Waypoints Objective;
     EnemyStatePatrol<StatesEnum> patrol;
@@ -30,6 +32,7 @@ public class EnemyController : MonoBehaviour
 
     #region RWVariables
     Dictionary<WaypointsEnum, float> WaypointsDic;
+    Dictionary<WaypointsEnum, float> RouletteDic;
     public List<Waypoints> wayPointsInfo;
     [SerializeField] Transform[] _wayPoints;
     [SerializeField] int _currentWaypoint;
@@ -46,7 +49,7 @@ public class EnemyController : MonoBehaviour
         _enemy = GetComponent<Enemy>();
         _los = GetComponent<PlayerLineofSight>();
         _rb = GetComponent<Rigidbody2D>();
-        InitializeSteeringsTest();
+        InitializeSteerings();
         InitializeFSM();
         InitializeTree();
 
@@ -64,13 +67,13 @@ public class EnemyController : MonoBehaviour
         CurrentWaypoint();
     }
 
-    void InitializeSteeringsTest()
+    void InitializeSteerings()
     {
         //Steering States & obstacle avoidance 
-        var seek = new Seek(_enemy.transform, target.transform);
+        //var seek = new Seek(_enemy.transform, target.transform);
         var pursuit = new Pursuit(_enemy.transform, target, timePrediction);
 
-        _steering = seek;
+        _steering = pursuit;
         Debug.Log(_steering);
 
         _obstacleAvoidance = new ObstacleAvoidance(_enemy.transform, angle, radius, obsMask, personalArea);
@@ -83,30 +86,36 @@ public class EnemyController : MonoBehaviour
 
         //States for the FSM 
         var idle = new EnemyStateIdle<StatesEnum>(_patrolCooldown, _enemy, _rb);
-        patrol = new EnemyStatePatrol<StatesEnum>(_enemy,  _obstacleAvoidance, this, maskWayP, obsMask);
+        patrol = new EnemyStatePatrol<StatesEnum>(_enemy,  _obstacleAvoidance, this, maskWayP, maskObsWalls);
         var steering = new EnemyStateSteering<StatesEnum>(_enemy,_steering, _obstacleAvoidance);
-        var shoot = new EnemyAttackState<StatesEnum>(_enemy);
-
+        var attack = new EnemyAttackState<StatesEnum>(_enemy);
+        var watch = new PlayerDetectedState<StatesEnum>(_enemy, target.transform);
         //Transitions between every state
 
         idle.AddTransition(StatesEnum.Walk, steering);
-        idle.AddTransition(StatesEnum.Attack, shoot);
+        idle.AddTransition(StatesEnum.Attack, attack);
         idle.AddTransition(StatesEnum.Default, patrol);
+        idle.AddTransition(StatesEnum.Chase, watch);
 
         steering.AddTransition(StatesEnum.Idle, idle);
-        steering.AddTransition(StatesEnum.Attack, shoot);
+        steering.AddTransition(StatesEnum.Attack, attack);
         steering.AddTransition(StatesEnum.Default, patrol);
+        steering.AddTransition(StatesEnum.Chase, watch);
 
-        shoot.AddTransition(StatesEnum.Walk, steering);
-        shoot.AddTransition(StatesEnum.Idle, idle);
-        shoot.AddTransition(StatesEnum.Default, patrol);
+        attack.AddTransition(StatesEnum.Walk, steering);
+        attack.AddTransition(StatesEnum.Idle, idle);
+        attack.AddTransition(StatesEnum.Default, patrol);
+        attack.AddTransition(StatesEnum.Chase, watch);
 
         patrol.AddTransition(StatesEnum.Idle, idle);
         patrol.AddTransition(StatesEnum.Walk, steering);
-        patrol.AddTransition(StatesEnum.Attack, shoot);
+        patrol.AddTransition(StatesEnum.Attack, attack);
+        patrol.AddTransition(StatesEnum.Chase, watch);
 
-
-
+        watch.AddTransition(StatesEnum.Idle, idle);
+        watch.AddTransition(StatesEnum.Walk, steering);
+        watch.AddTransition(StatesEnum.Attack, attack);
+        watch.AddTransition(StatesEnum.Default, patrol);
         //Estado Inicial
         _fsm.SetInit(idle);
     }
@@ -122,13 +131,15 @@ public class EnemyController : MonoBehaviour
         var Idle = new ActionNode(() => _fsm.Transition(StatesEnum.Idle));
         var Shoot = new ActionNode(() => _fsm.Transition(StatesEnum.Attack));
         var Patrol = new ActionNode(() => _fsm.Transition(StatesEnum.Default));
-
+        var Watch = new ActionNode(() => _fsm.Transition(StatesEnum.Chase));
 
         //Questions
 
      
         var qIsResting = new QuestionNode(isEnemyResting, Idle,Patrol);
-        var qisCooldown = new QuestionNode(() => _enemy.isCooldown, Pursuit, Shoot);
+        var qStillInSight = new QuestionNode(QuestionLoS, Pursuit, Patrol);
+        var qCheckDistance = new QuestionNode(CheckDistance, Watch, qStillInSight);
+        var qisCooldown = new QuestionNode(() => _enemy.isCooldown, qCheckDistance, Shoot);
         var qAttack = new QuestionNode(QuestionAttack, qisCooldown, Pursuit);
         var qLoS = new QuestionNode(QuestionLoS, qAttack ,qIsResting);
 
@@ -154,18 +165,27 @@ public class EnemyController : MonoBehaviour
         if (playerDetected)
         {
             LookingForPlayer = true;
-            searchCooldown = 5f;
+
         }
-        return _los.IsPlayerOnSight();
+        return playerDetected;
     }
 
-    bool NearWaypoint()
+
+
+    bool CheckDistance()
     {
-  
+        Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, minDistance);
+        foreach (var col in cols)
+        {
+            if (col.transform.GetComponent<Player>())
+            {
+                Debug.Log("Player Detected");
+                return true;
+            }
+        }
 
         return false;
     }
-
 
 
 
@@ -196,14 +216,7 @@ public class EnemyController : MonoBehaviour
         _fsm.OnUpdate();
         _root.Execute();
 
-        if (LookingForPlayer)
-        {
-            searchCooldown -= Time.deltaTime;
-            if (searchCooldown <= 0)
-            {
-                LookingForPlayer = false;
-            }
-        }
+   
     }
 
 
@@ -250,12 +263,21 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
-        //Keep throwing the Roullette in case the new Waypoint is the same as the current one
-        _currentWaypoint = (int)RouletteWheel.Roulette(WaypointsDic);
-        while (Objective == wayPointsInfo[_currentWaypoint])
+
+        //Create a new dictionary without the current objective to avoid repetition
+        RouletteDic = new Dictionary<WaypointsEnum, float>();
+        for (int i = 0; i < wayPointsInfo.Count; i++)
         {
-            _currentWaypoint = (int)RouletteWheel.Roulette(WaypointsDic);
+            if (i == _currentWaypoint)
+            {
+                continue;
+            }
+            var curr = wayPointsInfo[i];
+            RouletteDic[curr.type] = curr.probability;
         }
+
+
+        _currentWaypoint = (int)RouletteWheel.Roulette(RouletteDic);
         Objective = wayPointsInfo[_currentWaypoint];
         return _currentWaypoint;
     }

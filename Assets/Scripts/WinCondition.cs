@@ -10,7 +10,7 @@ public class WinCondition : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Player>())
+        if (collision.GetComponent<Player>() && !collision.GetComponent<Enemy>())
         {
             _message.text = "Ganaste!";
             _canvas.SetActive(true);

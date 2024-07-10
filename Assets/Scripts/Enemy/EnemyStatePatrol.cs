@@ -11,23 +11,24 @@ public class EnemyStatePatrol<T> : State<T>
     ObstacleAvoidance _obs;
     EnemyController _enemController;
     float radius = 100;
-    LayerMask maskObs;
+    LayerMask maskObsWalls;
     LayerMask maskWayP;
     int _nextPoint = 0;
     bool _isFinishPath = false;
     Waypoints Objective;
+    private float searchCooldown = 2f;
 
     #endregion
 
     #region Methods
-    public EnemyStatePatrol(Enemy enemy, ObstacleAvoidance Obs, EnemyController enemController, LayerMask maskWaypoints, LayerMask Obstacles)
+    public EnemyStatePatrol(Enemy enemy, ObstacleAvoidance Obs, EnemyController enemController, LayerMask maskWaypoints, LayerMask WallsandObstacles)
     {
         _enemy = enemy;
 
         _obs = Obs;
         _enemController = enemController;
         maskWayP = maskWaypoints;
-        maskObs = Obstacles;
+        maskObsWalls = WallsandObstacles;
     
        
 
@@ -45,33 +46,37 @@ public class EnemyStatePatrol<T> : State<T>
         Debug.Log(start);
         if (start == null)
         {
+            Debug.Log("No hay nodo principal");
             return;
         }
         path = new List<Waypoints>();
         path = AStar.Run(start, GetConnections, IsSatiesfies, GetCost, Heuristic);
 
         path = AStar.CleanPath(path, InView);
-
+        if (path == null || path.Count == 0)
+        {
+            Debug.Log("no hay camino");
+            _isFinishPath = true;
+            return;
+        }
     }
 
     public override void Execute()
     {
+        if (_enemController.LookingForPlayer)
+        {
+            searchCooldown -= Time.deltaTime;
+            if (searchCooldown <= 0)
+            {
+                _enemController.LookingForPlayer = false;
+                searchCooldown = 2f;
+                Debug.Log("Stop searching");
+            }
 
-        //Get the current waypoint from the enemy Controller
-     
-
-        //Set a new transform to keep the direction
-       // Transform wp = _wayPoints[_currentWaypoint].transform;
-
-        //movement towards waypoint
-       // var dir = wp.position - _enemy.transform.position;
-        //Use obstacle avoidance
-        //var dirNorm = _obs.GetDir(dir.normalized);
-
-
+        }
+  
         FollowPath();
-        //_enemy.GetStateWaypoints.SetWayPoints(path);
-        //box.SetWayPoints(path);
+ 
 
 
 
@@ -132,7 +137,7 @@ public class EnemyStatePatrol<T> : State<T>
             if (nearWaypoint == null || currentDistance < nearDistance)
             {
 
-                if (!Physics2D.Raycast(pos, dir.normalized, currentDistance, maskObs))
+                if (!Physics2D.Raycast(pos, dir.normalized, currentDistance, maskObsWalls))
                 {
                    
                     nearWaypoint = currentWaypoint.GetComponent<Waypoints>();
@@ -182,8 +187,8 @@ public class EnemyStatePatrol<T> : State<T>
     bool InView(Waypoints grandParent, Waypoints child)
     {
         Vector3 dir = child.transform.position - grandParent.transform.position;
-        Debug.Log(!Physics2D.Raycast(grandParent.transform.position, dir.normalized, dir.magnitude, maskObs));
-        return !Physics2D.Raycast(grandParent.transform.position, dir.normalized, dir.magnitude, maskObs);
+        Debug.Log(!Physics2D.Raycast(grandParent.transform.position, dir.normalized, dir.magnitude, maskObsWalls));
+        return !Physics2D.Raycast(grandParent.transform.position, dir.normalized, dir.magnitude, maskObsWalls);
 
     }
 

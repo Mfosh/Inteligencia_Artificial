@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public TMP_Text _message;
 
     #endregion
-    private void Awake()
+    virtual public void Awake()
     {
         
         movimientoCamara = GameObject.Find("Virtual Camera").GetComponent<CinemachineMovimientoCamara>();
@@ -71,5 +71,21 @@ public class Player : MonoBehaviour
         //UnityEditor.EditorApplication.isPlaying = false;
     }
 
+    public void StopMovement()
+    {
+        if (_rb != null)
+        {
+            _rb.bodyType = RigidbodyType2D.Static;
+        }
+        else Debug.Log("no hay rb");
+    }
+
+    public void ResumeMovement()
+    {
+        Debug.Log("Resume movement");
+        _rb.bodyType = RigidbodyType2D.Dynamic;
+
+
+    }
 
 }
